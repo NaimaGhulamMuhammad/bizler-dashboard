@@ -10,35 +10,39 @@ export default function Dashboard() {
 
   const {Header, Sider,Content, Footer} = Layout
   const [width, setWidth] = React.useState(250)
-  
+  const [collapsed, setCollapsed] = React.useState(false)
+  const handleClick = ()=>{
+    setCollapsed(!collapsed)
+    collapsed? setWidth(250) : setWidth(80)
+    // console.log({collapsed,width})
+  }
   return (
     <Layout>
     <Sider
+      collapsible
+      collapsed={collapsed}
       width={width}
       breakpoint="lg"
-      collapsedWidth="0"
-      onCollapse={(colp,type) => {colp ? setWidth('0') : setWidth(250)}}
+      collapsedWidth="80"
+      onCollapse={handleClick}
       style={{position:"fixed",left:0,height:"100vh", borderRight:"2px solid #ebe8ef", boxShadow:"rgb(0 0 0 / 5%) 0px 8px 15px"}}
       theme="light"
     >
-      <div className=" app-branding" >
-      <a className="app-logo" href="index.html"><img className="logo-icon mr-2" src={logo} alt="logo" /><span className="logo-text">PORTAL</span></a>
-      </div>
+      <div className="logo"> Logo</div>
       <SideMenu />
     </Sider>
-    <Layout style={{ marginLeft: width }}>
+    <Layout style={{ marginLeft: `${width}px` }}>
       <Header className="site-layout-sub-header-background py-2 pl-5" style={{ padding: 0, backgroundColor:"#fff" }} >
-      <Navbar />
+      <Navbar collapsed={collapsed} handleClick={handleClick}/>
       </Header>
-      
-      <Content style={{backgroundColor:"#f5f6fe" }} className=" pt-3 p-md-3 p-lg-4">
+      <Content style={{backgroundColor:"#ececec" }} className=" pt-3 p-md-3 p-lg-4">
         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
         <div class="container-xl"> 
         <Routes />
         </div>
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Mra Portal ©2021 | healthcare benefits consumer portal</Footer>
+      <Footer style={{ textAlign: 'center' }}>Business Experts Pakistan ©2021 </Footer>
     </Layout>
   </Layout>
       );

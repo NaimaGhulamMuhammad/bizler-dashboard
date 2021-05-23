@@ -1,43 +1,43 @@
 import React from "react";
-import {Menu, Row, Col,Avatar, Dropdown} from "antd"
-import {ArrowLeftOutlined ,ArrowRightOutlined, CaretDownOutlined, SettingTwoTone } from "@ant-design/icons"
+import {Menu, Row, Col,Avatar,Space, Dropdown,Button} from "antd"
+import {ArrowLeftOutlined, ArrowRightOutlined, CaretDownOutlined } from "@ant-design/icons"
 import {Link} from "react-router-dom"
 import userProfile from "../img/profile-1.png"
-import Searchbar from "../components/navbar/searchbar"
 import {useHistory} from "react-router-dom"
 
-const Navbar = () => {
-  const history = useHistory()
+const Navbar = ({collapsed, handleClick}) => {
 const menu = (
     <Menu>
-      <Menu.Item key="0" onClick={()=>history.push("/profile")}>
-         Account
+      <Menu.Item key="account" >
+        <Link to="/"> Account</Link>
       </Menu.Item>
-      <Menu.Item key="1" onClick={()=>history.push("/setting")}>
-        Setting
+      <Menu.Item key="setting" >
+        <Link to="/">Setting</Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" onClick={()=>history.push("/")}>
-        Log out
+      <Menu.Item key="logout">
+        <Link to="/">Log out</Link>
       </Menu.Item>
     </Menu>
   );
+
   return (
-	<Row align="top">
-	<Col flex="auto">
-	  <Searchbar />
-	</Col>
-	<Col  xs={2} lg={2}>
-	  
-	 <Link> <SettingTwoTone twoToneColor="#15a362" style={{fontSize:20,}}/> </Link>
-	</Col>
-	<Col xs={2} lg={2}>
-	  <Dropdown overlay={menu} placement="bottomLeft">
-		<Link className="ant-dropdown-link">
-	  <Avatar src={userProfile} /><CaretDownOutlined />
-	  </Link>
-	  </Dropdown>
-	</Col>
+	<Row align="center" justify="space-between">
+    <Col span={2}>
+      <Button type="link" onClick={handleClick} icon={collapsed?<ArrowRightOutlined />:<ArrowLeftOutlined />}></Button>
+    </Col>
+    <Col span={12}>
+    <div style={{border:"2px solid black", height:50,margin:5, marginLeft:40}}></div>
+    </Col>
+    <Col span={4}>
+      <Space >
+        <Dropdown overlay={menu} placement="bottomLeft">
+          <Link className="ant-dropdown-link">
+          <Avatar src={userProfile} /><CaretDownOutlined />
+          </Link>
+        </Dropdown>
+      </Space>
+    </Col>
   </Row>
   );
 };

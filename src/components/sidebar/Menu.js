@@ -1,33 +1,64 @@
 import React from "react"
 import { Menu } from 'antd';
-import {HomeOutlined, PicLeftOutlined, PlusSquareOutlined, UserOutlined } from '@ant-design/icons';
+import {BorderLeftOutlined, ContactsOutlined, FileProtectOutlined, FormOutlined, HomeOutlined, IdcardOutlined, PicCenterOutlined, PicLeftOutlined, PlusSquareOutlined, SlidersOutlined, SwapOutlined, TeamOutlined, UnorderedListOutlined, UserAddOutlined, UserOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import MenuItem from "antd/lib/menu/MenuItem";
-import {useHistory} from "react-router-dom"
+import {Link} from "react-router-dom"
+
+
 const { SubMenu } = Menu;
 
 
 const SideMenu = ()=> {
-    const history = useHistory()
     const menudata = [
         {
-            title:"Overview",
-            icon:<HomeOutlined className="nav-icon"/>,
+            title:"Dashboard",
+            icon:<HomeOutlined  style={{fontSize:20}}/>,
             key:"/",
         },
         {
-            title:"Transactions",
-            icon:<PicLeftOutlined className="nav-icon"/>,
-            key:"/transactions",
+            title:"Blogs",
+            icon:<BorderLeftOutlined   style={{fontSize:20}}/>,
+            key:"blogs",
         },
         {
-            title:"Add Transaction",
-            icon:<PlusSquareOutlined className="nav-icon"/>,
-            key:"/addTransaction",
+            title:"Business partners",
+            icon:<IdcardOutlined  style={{fontSize:20}}/>,
+            key:"partners",
+        },
+        {
+            title:"Team Members",
+            icon:<TeamOutlined  style={{fontSize:20}}/>,
+            key:"ourTeam",
+        },
+        {
+            title:"Portfolios",
+            icon:<PicCenterOutlined style={{fontSize:20}} />,
+            key:"portfolios",
+        },
+        {
+            title:"Services",
+            icon:<SlidersOutlined style={{fontSize:20}} />,
+            key:"services",
+        },
+        {
+            title:"Packages",
+            icon:<FileProtectOutlined style={{fontSize:20}}  />,
+            key:"packages",
+        },
+        {
+            title:"customer Reviews",
+            icon:<SwapOutlined style={{fontSize:20}} />,
+            key:"reviews",
+        },
+        {
+            title:"Consultation",
+            icon:<ContactsOutlined style={{fontSize:20}} />,
+            key:"consultation",
         },
         {
             title:"User Profile",
-            icon:<UserOutlined />,
-            key:"sub1",
+            icon:<UserOutlined  style={{fontSize:20}}/>,
+            key:"sub4",
             subItems:[
                 {
                     subTitle:"Account",
@@ -40,23 +71,24 @@ const SideMenu = ()=> {
             ]
         }
     ]
+
     return(
-        <Menu mode="inline" defaultSelectedKeys={['/']} onClick={(e)=>history.push(e.key)}>
+        <Menu mode="inline" defaultSelectedKeys={['/']} onClick={(e)=>console.log(e.domEvent)}>
            { menudata.map(menu => {
                const {key, title, icon, subItems}  = menu
                return(
                    subItems? 
                     <SubMenu key={key} icon={icon} title={title}  className="submenu-list list-unstyled">  
                     {subItems.map( submenu => 
-                    {const {subTitle, key} = submenu;
+                    {const {subTitle,icon, key} = submenu;
                     return(
-                        <MenuItem key={key} className="submenu-item" >{subTitle}</MenuItem>
+                        <MenuItem key={key} className="submenu-item" icon={icon} ><Link to={`/${key}`}>{subTitle}</Link></MenuItem>
                     )}
 
                     )}
                     </SubMenu>
                      :
-                <Menu.Item key={key} icon={icon} className="nav-item" ><span className="nav-link-text">{title}</span></Menu.Item>
+                <Menu.Item key={key} icon={icon} className="nav-item" ><Link to={`/${key}`}>{title}</Link></Menu.Item>
                     
                )}
            )}
